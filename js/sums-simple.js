@@ -1,0 +1,42 @@
+$(function(){
+  var rand = Math.floor(Math.random() * 9) + 1;
+  var overallTotal = 0;
+  
+  while(overallTotal < 1){
+    var operand = Math.floor(Math.random() * 2) + 1;
+    operand = operand == 1 ? '-' : '+';
+    
+    var no1 = Math.floor(Math.random() * 9) + 1;
+    var no2 = Math.floor(Math.random() * 9) + 1;
+    
+    overallTotal = operand == '-' ? no1 - no2 : no1 + no2;
+    overallTotal = overallTotal.toString();
+    
+    //FIX ME: 11 breaks.
+    numbersArray = [no1, no2, overallTotal[0]];
+    
+    if (overallTotal[1]){
+      numbersArray.push(overallTotal[1]);
+    }
+    
+    numbersArray = shuffle(numbersArray);
+  }
+
+  $('.no1').data('id', no1).find('p').html(no1);
+  $('.operand').find('p').html(operand);
+  $('.no2').data('id', no2).find('p').html(no2);
+  $('.total1').data('id', overallTotal[0]).find('p').html(overallTotal[0]);
+  
+  if (overallTotal[1]){
+    $('.total2').data('id', overallTotal[1]).find('p').html(overallTotal[1]);
+  }
+  
+  $.each(numbersArray, function(x, y){
+    $('.answers').append('<div class="twenty draggable" data-id="'+y+'">'+y+'</div>');
+  });
+  
+  function shuffle(o){ //v1.0
+    for(var j, x, i = o.length; i; j = Math.floor(Math.random() * i), x = o[--i], o[i] = o[j], o[j] = x);
+    return o;
+  };  
+});
