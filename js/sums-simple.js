@@ -1,4 +1,21 @@
 $(function(){
+
+  var options = window.location.hash;
+  if (options == "#dif=2"){
+    $('#med').addClass('active');
+    $('.droppable.total1, .droppable.total2').css({'color':'transparent'});
+  }
+  else{
+    $('#easy').addClass('active');
+  }
+
+  //hard mode hide all, but this has the problem of not knowing which way around they should go.
+  //if (options == "#dif=3") $('.droppable').css({'color':'transparent', 'background-color': '#fff', 'opacity': '0.75'});
+
+  $('#easy, #med, #hard').click(function(){
+    window.location.reload();
+  });
+
   var rand = Math.floor(Math.random() * 9) + 1;
   var overallTotal = 0;
   var numbersArray = [];

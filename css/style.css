@@ -10,7 +10,6 @@ p {
 }
 
 .btn {
-  float: right;
   padding: 15px;
   background: #2980b9;
   color: #fff;
@@ -21,6 +20,17 @@ p {
 
 .green {
    color: green !important;
+}
+
+.right {
+  float: right;
+}
+.left {
+  float: left;
+}
+
+.btn.active {
+  opacity: 0.75;
 }
 
 .draggable {
@@ -81,7 +91,7 @@ p {
 }
 
 .droppable{
-  color: #fff;
+  color: rgba(255,255,255,0.7);
 }
 
 @media ( max-width:  480px){
