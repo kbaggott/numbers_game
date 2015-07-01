@@ -3,7 +3,7 @@ $(function() {
   var audioElement = document.createElement('audio');
   audioElement.setAttribute('src', 'sounds/drag.mp3');
 
-  	var numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+  var numbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
 	$.each(numbers, function(number){
 	  window['m' + number] = document.createElement('audio');
 	  window['m' + number] .setAttribute('src', 'sounds/'+number+'.mp3');
@@ -16,12 +16,12 @@ $(function() {
     revertDuration: 50,
     start: function(event, div){
              div.helper.removeClass('non-wiggler').addClass('wiggler');
-              var sound = eval("m"+(div.helper.data('id')));
+              var sound = eval("m"+(div.helper.data('sound')));
               sound.play();
            },
     stop: function(event, div){
              div.helper.stop().removeClass('wiggler').addClass('non-wiggler');
-              var sound = eval("m"+(div.helper.data('id')));
+              var sound = eval("m"+(div.helper.data('sound')));
               sound.pause();
            }, 
     });
@@ -37,6 +37,7 @@ $(function() {
             itemDropped();
     }, 
     accept: function(e){
+              console.log(e.data('id'),$(this).data('id'));
               if(e.data('id') == $(this).data('id')) {
                 return true;
               }
@@ -47,15 +48,19 @@ $(function() {
    
    function itemDropped(){
       totalDropped = totalDropped + 1;
-      
-      if (totalDropped == $('.droppable').length){
+      if (totalDropped == $('.draggable').length){
         audioElement.pause();
-        alert('well done');
-        location.reload();
-        /*
-$('.modal').modal('show');
-        setTimeout(function(){location.reload()}, 2000);
-*/
+        swal(
+          {
+            title: "Well done!",
+            text: "You solved the sum!",
+            type: "success",
+            confirmButtonText: "Try another..."
+          },
+          function(){
+            location.reload();
+          }
+        );
       }
    }
 });

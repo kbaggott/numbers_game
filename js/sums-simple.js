@@ -1,7 +1,9 @@
 $(function(){
   var rand = Math.floor(Math.random() * 9) + 1;
   var overallTotal = 0;
-  
+  var numbersArray = [];
+  var totalsArray = [];
+
   while(overallTotal < 1){
     var operand = Math.floor(Math.random() * 2) + 1;
     operand = operand == 1 ? '-' : '+';
@@ -13,26 +15,34 @@ $(function(){
     overallTotal = overallTotal.toString();
     
     //FIX ME: 11 breaks.
-    numbersArray = [no1, no2, overallTotal[0]];
-    
-    if (overallTotal[1]){
-      numbersArray.push(overallTotal[1]);
-    }
-    
-    numbersArray = shuffle(numbersArray);
+    numbersArray = [[1, no1], [2, no2]];
+    totalsArray = [[1, overallTotal[0]]];
+    if (overallTotal[1]) totalsArray.push([2, overallTotal[1]]);
   }
 
-  $('.no1').data('id', no1).find('p').html(no1);
-  $('.operand').find('p').html(operand);
-  $('.no2').data('id', no2).find('p').html(no2);
-  $('.total1').data('id', overallTotal[0]).find('p').html(overallTotal[0]);
-  
-  if (overallTotal[1]){
-    $('.total2').data('id', overallTotal[1]).find('p').html(overallTotal[1]);
-  }
-  
+  //numbers
   $.each(numbersArray, function(x, y){
-    $('.answers').append('<div class="twenty draggable" data-id="'+y+'">'+y+'</div>');
+     $('.no'+y[0]).data('id', 'n-'+y[1]).find('p').html(y[1]);
+  });
+  numbersArray = shuffle(numbersArray);
+  $.each(numbersArray, function(x, y){
+     $('.answers').append('<div class="twenty draggable" data-sound="'+y[1]+'" data-id="n-'+y[1]+'">'+y[1]+'</div>');
+  });
+
+  //operand
+  $('.operand').find('p').html(operand);
+
+  //totals
+  $.each(totalsArray, function(x, y){
+    $('.total'+y[0]).data('id', y[0]+'-'+y[1]).find('p').html(y[1]);
+  });
+  totalsArray = shuffle(totalsArray);
+  $.each(totalsArray, function(x, y){
+    $('.answers').append('<div class="twenty draggable" data-sound="'+y[1]+'" data-id="'+y[0]+'-'+y[1]+'">'+y[1]+'</div>');
+  });
+
+  $('droppable').click(function(){
+    console.log($(this).data('id'));
   });
   
   function shuffle(o){ //v1.0
